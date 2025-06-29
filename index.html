@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="workeazy.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   
+  </head>
+  <body>
+    
+    
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            
+            <div class="modal-header">                                                                                            
+                <h2 class="modal-title">Join Our Job Portal</h2>
+                <p class="modal-subtitle">Find your dream job with us</p>
+            </div>
+
+            <form id="jobSeekerForm" onsubmit="handleSubmit(event)">
+                <div class="form-row">                                                                         
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Experience Level</label>
+                        <select id="experience" name="experience">
+                            <option value="">Select Experience</option>
+                            <option value="entry">Entry Level (0-2 years)</option>
+                            <option value="mid">Mid Level (3-5 years)</option>
+                            <option value="senior">Senior Level (6-10 years)</option>
+                            <option value="expert">Expert Level (10+ years)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobTitle">Desired Job Title</label>
+                    <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g., Software Engineer, Marketing Manager">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="location">Preferred Location</label>
+                        <input type="text" id="location" name="location" placeholder="City, Country">
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Expected Salary</label>
+                        <input type="text" id="salary" name="salary" placeholder="e.g., $50,000 - $70,000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="skills">Key Skills</label>
+                    <textarea id="skills" name="skills" placeholder="List your main skills and technologies..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="bio">Professional Summary</label>
+                    <textarea id="bio" name="bio" placeholder="Brief description of your professional background and goals..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    🎯 Create Profile
+                </button>
+
+                <div class="success-message" id="successMessage">
+                    ✅ Registration successful! Welcome aboard!
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <nav class="navbar">
+      <div class="navbar-image">
+        <img
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATYAAACjCAMAAAA3vsLfAAABRFBMVEX///8TL0X//v////0QLkT4/f0AIjoAJT0AIzf8//8AGzQSMEX///sTL0f///oGKUAAESugqa6wusHDzdP//fIAGTPl6u0AHjciNUZaanfu9/sABiUAFzUAFzIAACTz9/kAAB0HKj01RlQAACcADiv6fih7h5BJWGUAABmSn6jT298AABNodH7Cyc4AFCz5lTb+aiA5Slf56Mj/9eaMmKH5jzH97dT6oDtue4UpO0xJVmP5iCyBjZb9eCP2yaT+7dz5qETrxZcAAAD12rvuwI/skDfjnVjlp2rklEnxlznjeUfnn3jps33vbCznnl/qaCLvtZD12bP636fnkGLzy67omVjrhlHygkTndCXnjkPjmkn2z6/sdybpnG3jo1vphUTsun/ogi/ytIv/+9vqpnPptXTuqU75w3jzkEXyyIQWKTRPZXfdx4OIAAAS2klEQVR4nO1b/XvaRtYVSAiQLIQESAgqZLACQUG2iTEGBxyndtpmN9s02yZ1EjepkzR9t/3/f3/vnZGEBPJXu/XGfeY8bSI0o9HM0b13zp2ZcBwDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDwy0E/7/uwJ8FH40ge1NvxP+zwatvPX83hr8HU6G5/T1Gc6OglN2Ul95+UKbWSjdoarFXZW/1h6oePRrfIG9OBeHd3Av/EvDV48dbX+3cnI8am67rbgxv6G1/Efjx11tbW6/HNxfZjIyQyai9m3rdtZDlFuYDIYRMl9nVKtza/W+Ata2vq8miuM9Gyi66yUdt8anOnRqzopp/nLaVZpPDWinO0nGcE4CWe8mnDSZ5L/xRevQYWXvyKO2tyabT+7zS6HK11b5cQtv1rD79u11WlPI6nnvzj3/uLD2T/BlV3XlKWNt6fX/xWc7vdlCSpQr/apNIiiq8prVdRONVO3GlWv/a3v7HUemS5uHO2vjb3a2tx0+2tt7uLLefpJlfupNd+ju44teu0r3rOmlk8Xw8dlzzs10BQNv2s++qF1fi+dLzb3Z3t77591dbT47PE25pUepaWoXnV1r4L8a2C+6m9eXi4o/byNv3D3nkmg/id/KZLNEdYGvfju+/3nryPN5wRdd93/diMZzc8HPR046Od3Qj3qKhd3v7+72JvizIAnc2/NFkMKnglXw5bUal3510tYqTXuz5o253pnu5pfs8eVQbzfq6F3vUg/7q8dFncUzBLa/iGwZnONzRNsGPP0QGx6+EItAdu7u7j5/u8I+e7H01jhf13Fqt1rQWN/x1qVaz68gStR2jYMOd9VhPvEldElVAXmpblXhrZBYv+lamZop5t89dhbbKoA61RVGSphMvaGUBR++ptFgc9o0la4NHJQnLzGnXCHugwQA2k5aj35NqTcK60fV9i5v53M4zytszmBkCjt4fJHyWX7v/Alh7BXerX2/t/bwohDFaaiaTyQ9itElKJiNMjYX51ZWMokh62BFnpIpQJZPBP4S8OUnYIZBqSXkBy01CW9JJdQ1Mt1JZPGIMsLaCbSmKWOg6C9rwff6wRhuDt6lSXYtbnDMIXoT9MAv9Ir2tfZER2sku6W4mU6CP9g2/awBtay/B1L4H7p69PCJBeuf7OydBrKMDrR68AtZe4Lzx4fUekR8LpNCWIbQtBlbHvkmhtRk9CYYpE9IIzI6H/Gd5Gtn0dl6mw5RWadPBtm3bBVsOqPHrIhm1mlcFbFIaBm5PyosjU6XFqoqdUOxBIzIjZ9+EJ6Aor6p44c6K5LGLaRsZvj7xgbbvtrf/NT44AYM7IVb25nQ+P6W88eg1O0/PgLWvx2vwvudP9l7f/+O0ATvGEMYph5TJeKnWvcVH0mwh4nOFNq8gkJFWQovSkRZBFDuW1evYeexKPRZnuzWsbqrDnrUv17CnktUICwciPqoOrYE1FOFacbUr0OY7nqc58I4xWNoPpaOX8+35s58ectXv5/P5nZODQJPwoDse7D4+3kFLLB3v7S2lCNe0tlxPVKhz1jDcUIrUjhFatl8LbkGoai3T1piqxAq1sOmKJChKvt31nCJXdCoDEcrV4NVAwMiGlsR6H4sdQx9i+DAHOfqFvCZ+gBGZDBxvAr0W6mRiuJi2CNUft7f/WeJ23p8AX++Onp/M7wCQN2i8dPTqwYPdV8+rZFQ7b/f2jpNy65q0jSQS0/L1ie95ldnUJCSJg4A1o41xEAyk09V9zV+izcoTI5yELTt1Vc6I+4vZ2J/mIcBZQZCquFh7EPUk18fPZPcpbSNwUWkxT/VtVXX1y2mLRCn/0/b2S1Cw1R/eAW8nPwJ3x2eEN56rPjp7sLv77f2Aqvuv9w6fJ1u8Hm3GJvHMaCyNmURiTs2nvwc4WSiqoEWCIEYbMZ6MOmyEpjkD0kUrLjuMDnSnFpCB19KMi02KOvAmtI2w40on9uyw05nOrkBblHP/8Gz7GYoKfvwThDXw0PfVN8Db2UFp5+MZ2NrTnTDnebS39/bDn6FtQuyFjCXskSnIkTl5ZXRgdRpTcwva/Cbx7kIUu5wy+jeNVeFgvLYAxBJz08vEjOO0cRp0zqRv76kZdT/ueODn3KW0ZRfa7CEkCgfEnqrfoaOejbnSwQnwdvziwYMHZ8dRMKv+sheXHxfR1kmlLVemLlmMRsKjs+A9wtRMDIhJoc0ok5kEHYkPOVAyZT9kLRDrfWhOqgS8COqSuCnizakTdrxtJPUZ4eSS2Bal4qWX2/OfKBtrB0Dbe5gNSgdndx4gXj1f5KvjVR89l7aF+cdo8wlthURnc+hLdNbkSE1zFG8/pM2B6QBUS60bFmS5DhhWr7EEYyrIIlZyWpFhxeDbIatoeOpwIbbJhmL2ctqCl/MgQZ7NTx6Sn6X3EN2IwigdE9q+HYf5FuD54d6nhPzIpsrdVdqUgLaRCVfihEsA7UPJW9ARo0k0VjINC2gbEKNU94sLvlswubTdZhKukJHVfezHBkiKldytAVzT7+K42HCz3tW9pJ9T2hJ5UspMCrZ99Gw+f0OYHp/N5x9x1uTHH5G13X/zi2XG0s97h78kfPRC2sI0JkYbhuHMZjzhg9Y9pE0dwlXFhYqqVYyXU9oszaWBLUapt4FzsiJHujkCuCHPaTW4Ws1SB2rYW7+Fj4MSKm/WLW1BcBpt5VUBArriR+qZ3Boa2xEX6A6k7dXRWtTAh7d7h4/W+OSz13LSfbwqx00ABTCWk5HqyI3Y5eIgtAmEebCeOOMVGLZClbMSo07G6gYRGMJwlbauGInnSjsQiWDhptQJE68r08b/NJ+jBOEeggSBKMdXSWR78fQMeYti2/1Ph+CjV6BNOY+2Hl5terF1LZ4LaWtw59OWCVIxO06bB8FLkcoI13XLEfCHQXz/Etq4Rn/qmiTrwsm81vFitCWQJnfBDd88m5+CBOEPTucnzyGdeo/64+O4egxp1SsUbTjMtUeHh8vyI/C7dGvjV2gjehWcNLHC4qFWUztF2rt02mT8T1ESDuy1MGGopCKHWVpGkFOcNB/RxuN24siqSy5J6RVV8ilt8tVo4x6Cl4IE2Xk5n39fhXTqDqoPUGtkle0b4A2HWf3l8PDnEreE82gzErQpGSJoUWzIS7xwOj5AhoK+cI61Bc4Yd/Ac2GZN41IBr/bdZHUKZ6gGtGWDDhYdo6JN6psYQslyF/JdSMRXTrfTnJSrviTOeXB65/RN6egdsPbqDYn9uCsa7h2MPx2uyI9AwKo9J9LPGk55grBY2vIwTVbIrI+8yCTyLIBSKqOIoyvRlg/MjbxqKizPHwEdpEIDfJisoQRE0t5VzKXVu2A92dHkMPFCjjaTeg8/9wpt4KXvT+fvHlZfzO+8+ICJ1YMXJJ2CgurTx1tPviJ++hxC25hbBsgfOVSrBD2yVLNItwM928YajU0izGbhyPF/nRSbhNVznRQ/DeEtMC8+bLhWiXEVIwj+B6kRKNsYbeCj5yx6egXwGvwKnhtb5iIoDoVUa+OPIH8/egOZwc8fT+/cOf24EzFaffpk68nbMVz8fLgkP+jbcJ7P5KOvji6HyXiUXXlk3OowF/YamNHCwYHoaAuyjMU8fxFtoFBUmUiQxYAwwSV2nrJ3kqVWE9O7pIouZs6hjUgpdR9acwjf8TKyJpBCG7cDU+hHCGmnZxjWDqqxTSng7cne2/HazttDlB8rWxgdFad/s0u/q18IjCPfo7wZQ2ImgfT3Nsl8b/YDK8jpWF8Osm/dTqcNea036PqHIM4MJ0eHgB+h1g2THp4PToz49M05dLvAOsN4IUBjQRwdADwqSmlpSBs3kuSMHUtVUCJDv1JoWwMJcnqH4l1y+w/tbQ+m0FT5ASCyEpTAvu4Z/gRFeoaGIXnkGd6oTZdXw3g2oStFtaHmOY6h9WwiyPK93EW0IVk+JqUEpjTsUSMykPPaIJb+9jbcLzZCz9RtWRak/mK4PnYG5mOyMLCez4tR5szTxujUZuAqu6sVo0bz+OHSrA2lByXt9MVK/MIp9PCXXz8d/pKUH/Qj5ag5ZVTbtd18XKubcMOkxlfrB34EqaWioCKVyqLo2vRRoe1xF9KmkJRVc6OWJ1zsgbrm4BCLxkjMQ3goVGjneG6CLmn3fFrsTcoC+aSEtmKbTJ30Ua6Yq0xVWQ7kNElJXMvL4eKnVs8T0ZhGGzf+kdJ2+vRDiWBtrRRclEoffj0kOF6RHwhcqZblBV2yoqrhzBfcERcTnkG/eDQ5IoWmH2chhbZgKWhmBy3mw7R2ZCuKIthmbzbq9lwT2lViuVuuh7atuoI1mw2mLu5RqGpgbXQdSrDzVnfUx1I1I+fDhSQLW8q7U2vQE8kiPfxMc1IOZ1HE/x0/SsF/PiFrn1blB4EvkbXqKMWx4WVKbMMgY4Jaj4K2VxejVIh+fDFgLZU2L76XMHOFJG1cn95RRTFPLDeQrCFvlp0JilUSDcyhFeo2TmvSR/OmSUqVPIkkWcI3Rh4FN3awkwL0WF62Nnqy4H0Y2mguCiCnZAB7e9TWVuRHNvzTk6WQCPiW630uN9hA1yIpoyJsDBILo461IQScoam5wyDA8IQ2ZYU2aGaxc1UgaWRIGzRYkW1U03THT2jtLy2waWURtwNphfx6NzcTo9YqdVeNPq2itnqNaFDcbF0NP65gT3EdcIm2LA3zRycprG3FWTtcXqFcwJlt2ioEDkGVWhaJU/p0Q4QbsiC2pj63pBD8YUvCVBAy6I1pTCHp92zbbiXXlbwy3HP3SU+zuB8w3bAlN1Ynp9VbUl4VVNFuDcPGFifDjK4JeScUm+4GzJxct/lFKzpkqO+7kFjhNre70YubKe7WNm1RVcVaq66lJlcU1e/evQrxDeLF668Abyl+BfxnvLxbH0zd+IejDaaiKFv96Gv7s6FqtoezZG/CTvWtaUGsW6NKMDxcq+IMDQ8NJLbpyVEITUuk8Lo2SqhRztMmvZ7V1ZYsLZj2c/7IguKR7tCndd1fFDt+f2INun1/NXtt6LPBoEtWlM6njStVL8MlJ4SKiAtvXFz9jyBSkatN8fEqf/JNelk5j7b/Ba58HGkhshMGzyfTqqXjRMmjjavHyvirdSBLtWn786HtGoid61i+ugDnVLr42dVSXG0a/mnXuGlkE3+l/KDLQHyycOWwbfwM6XJDK1E7XqdhgvRc2c35GyLNnP744faumFFalcvrfVZw9FlsknT8WXemh/Nepa/1AXgAqYgX8EvDzR+nT1J4o6/l8LhHH+dO3BnWRtHoPawcHVb0RuRxcubImI1Go9liWtZsXOW/ZT5qDNc7nVY7EA3e/t3fOvW7neDnaL3emU7JiSXnt+lUkqZTInhz9bv412ijhYsc3S+D407eptsLh6/ho9LmqLj4NaUHI4qWa5r21KclxqwGYnkjVUd9xphsaDlHb/5GBuEV2rqRa/h1l1pNv6U3HMch/uc4DbnTaFBDHJHTm8O8reFCeHDsg5uZUzNcUNXWdccxek3Kh3YXfjmBEWPerKi2pVU8fzTFDEha2tv9/NH7wsDlC3ryttekdHlSndDYbxLhGx4KkTtOcF1Zn+Dq3u/yAI9kBWdknWlH3whDOxAFf+oturCm3UsoapJlq7VyuUyWcMze7XJRPFAFaU8j6LVXDvs/oSEaaMvlIkHVkKN9xqJQQC68HqTnWnhu2G+NGp1wNY7SNmtp4S9oqBi8k/PaorBIV+3BLdNsMARIvr9c7+lkRH4rzPP7lIq+WdjcXA/9LkYb173rcT05N1qvcINwL9+CSDcLOdTcwWhkNffpE1rNbLVICKQzrjPZRDtTFLC5ejKVuy1wKiN5nfhZJcrhRwFt7gxyTBw5WRKP0ebf05zNLue1Zk7bogmBsQmNeGbgsVqtPrXV8CCd1pr5uh4uHCG82VQqlzcLlp7jrvUPPT4jNPbJlmejINNjLsVhmVhQENu4Vdpy7u/+lz7ndHoVDFu4ztP/wgJlMQ122dBJrSY9v55dim3hWz3PyC2av1XYX8e5zqKHh/rrA7rOu07NjtAWjSjupJwlDwrwqyv/HvpoXZ3W6/VpbUbzTKDNaBcCA1ul7bbxFAf0XV+va/5kPXCtyb1pX+8P71nBvxJoxk5G8AnadJfsOFTc0CsrNDAaGXoaikwUWitYrtc20Nv12IR5y2nj9OH6vcIs5MPvle+2huH4+l/qi/Hxzm8x2py7xEyNaVOjDVn3qHjp3qNHPXACyPXuBTNpc7PZbA3pPwbhw1dziYtbhlykQxFF+FVcFBXjw4rX44JqTrj/HBYWnRz9K0vbjlqNvWblZCoDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDA8Nfiv8HfA47X69jEnIAAAAASUVORK5CYII="
+          alt=""
+          class="image1"
+        />
+      </div>
+    </nav>
+    <section class="container-1">
+      <div class="box-1">
+        <h1>Connecting Blue-Collar Workforce to Global Opportunites</h1>
+        <p>
+          Workezy bridges the gap between surplus blue-collar workforce in
+          countries like India and labor shortages in regions such as the GCC
+          and the West.
+        </p>
+        <div class="box-2">
+          <button class="btn" onclick="openModal()">For Employers</button>
+          <button class="btn" onclick="openModal()">For Job Seekers</button>
+        </div>
+      </div>
+    </section>
+    <section class="section-2">
+      <div class="container-2">
+        <div class="left-div">
+          <h2>About Us</h2>
+        <p>
+          The demand for blue-collar workforce is rising in regions like the GCC
+          and the West, while countries like India have a surplus of skilled
+          workers.
+          Workezy leverages this opportunity to connect talent with
+          global opportunities. With 3 years of experience in the recruitment
+          industry, Workezy offers end-to-end services, including workforce
+          sourcing, upskilling, and visa and immigration assistance. We help
+          employers overcome labor shortages and provide workers with stable,
+          well-paying jobs backed by a job guarantee                         
+        </p>
+      </div>
+      <div class="right-div">
+        <img src="https://commercialphotography.in/wp-content/uploads/2024/10/Business-Portrait-Photography.jpg" alt="" class="image2">
+      </div>
+      </div>
+    </section>
+        <div class=" Industries-Container">
+         <h2>Industries We Serve</h2>
+         <div class="Industries-buttons">
+          <button class="btn-1"><i class="fas fa-notes-medical" style="color: #be414b; margin-left: 30px; padding: 15px;"></i> Healthcare</button>
+          <button class="btn-1"><i class="fas fa-truck" style="color:#be414b; margin-left:30px; padding: 15px;"></i>Logistics</button>
+          <button class="btn-1"><i class="fas fa-industry" style="color:#be414b; margin-left:30px; padding: 15px;"></i>Manufacturing</button>
+          <button class="btn-1"><i class="fas fa-user-shield" style="color:#be414b; margin-left:30px; padding: 15px;"></i>Admin & Back Office</button>
+          <button class="btn-1"><i class="fas fa-broom"  style="color:#be414b; margin-left:30px; padding: 15px;"></i>Domestic Service</button>
+          <button class="btn-1"><i class="fas fa-hotel" style="color:#be414b; margin-left:30px; padding: 15px;"></i>  Hospitality</button>
+          <button class="btn-1"><i class="fas fa-shopping-bag" style="color:#be414b; margin-left:30px; padding: 15px;"></i> Retail & E-commerce</button>
+          <button class="btn-1"><i class="fas fa-cogs" style="color:#be414b; margin-left:30px; padding: 15px;"></i>Operations</button>
+          <button class="btn-1"><i class="fas fa-university" style="color:#be414b; margin-left:30px; padding: 15px;"></i>Banking & Finance</button>
+          <button class="btn-1"><i class="fas fa-utensils" style="color:#be414b; margin-left:30px; padding: 15px;"></i>Resturants</button>
+          <button class="btn-1"><i class="fas fa-person-digging" style="color:#be414b; margin-left:30px; padding: 15px;"></i>Construction</button>
+          <button class="btn-1"><i class="fas fa-laptop" style="color:#be414b; margin-left:30px; padding: 15px;"></i>IT</button>
+          <button class="btn-1"><i class="fas fa-handshake" style="color:#be414b; margin-left:30px; padding: 15px;"></i>Security & Service</button>
+          <button class="btn-1"><i class="fas fa-chart-line" style="color:#be414b; margin-left:30px; padding: 15px; "></i>Sales & Marketing</button>
+         </div>
+        </div>
+      <div class="process-container">
+        <h2>Our Process</h2>
+        <div class="process-row">
+          <div class="process-cards">
+           <div class="heading-div">
+            <span class="number">1</span>
+            <h3 class="process-title">UNDERSTANDING EMPLOYEE REQUIREMENTS</h3>
+           </div>
+           <p class="process-description">We work closely with employers to understand their specific manpower needs, including skills, experience, and timelines.</p>
+          </div>
+          <div class="process-cards">
+            <div class="heading-div">
+              <span class="number">2</span>
+              <h3 class="process-title">SCREENING AND SHORTLISTING CANDIDATES</h3>
+            </div>
+            <p class="process-description">Two rounds of interviews are conducted to screen and shortlist candidates based on employer standards and job roles</p>
+          </div>
+          <div class="process-cards">
+            <div class="heading-div">
+              <span class="number">3</span>
+              <h3 class="process-title">ASSESSMENT AND DOCUMENTATION </h3>
+        </div>
+            <p class="process-description-3">We conduct trade skills and language assessments, organize interviews with employers, and verify documents with support for any corrections</p>
+          </div>
+          <div class="process-cards">
+            <div class="heading-div">
+              <span class="number">4</span>
+              <h3 class="process-title">VISA AND IMMIGRATION</h3>
+            </div>
+            <p class="process-description-4">We manage the visa process, assist with documentation, and prepare candidates for interviews to ensure a smooth transition.</p>
+          </div>
+          
+        </div>
+      </div>
+    <div class="benefit-container">
+      <h2 class="benefit-heading">Benefits</h2>
+      <div class="benefit-card-container">
+        <div class="benefit-card">
+           <img src="https://img.icons8.com/?size=100&id=58864&format=png&color=FFFFFF" alt="" class="benefit-card-img">
+           <h3 class="benefit-card-title">Upskill with Workezy training</h3>
+           <p class="benefit-card-description">Enhance your skills with Workezy Trainings. Learn language, leadership, communication, sales, and more to excel in your career.</p>
+        </div>
+        <div class="benefit-card">
+          <img src="https://img.icons8.com/?size=100&id=11159&format=png&color=FFFFFF" alt="" class="benefit-card-img">
+          <h3 class="benefit-card-title">Get 100% Job Security</h3>
+          <p class="benefit-card-description">Workezy not only helps you secure an overseas job but also guarantees job security, ensuring support even if you lose your job.</p>
+       </div>
+      </div>
+    </div>
+    <div class="testimonial-container">
+      <h1 class="testimonial-heading">Testimonial</h1>
+      <div class="testimonial-buttons">
+        <button class="button-4 active" id="jobseeker-btn">Job seekers</button>
+        <button class="button-4" id="employer-btn">Employers</button>
+      </div>
+      <div class="testimonial-cards" id="jobseeker-cards">
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="https://wallpapercave.com/wp/wp6558834.jpg" alt="">
+          </div>
+          <div class="testimonial-name">Yajat Yadav</div>
+          <div class="testimonial-proffesion">SDE</div>
+          <div class="testimonial-location">
+            <div class="flex-location-cities">
+              <div class="location-cities">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHqUFx4yBWukSFU98PfOvQaSbIoVjgSz6tA&s" class="flag-icon-4" alt="">
+          <p class="fromcity">India</p>
+            </div>
+             <img src= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAACdeAAAnXgHPwViOAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAALVJREFUeJzt1s0JwkAQQOGnHsU/ELxqI1ZgDbId2Ib9WIM3sQpr8BovCbKCJhBwSPI+2IWBgR0WdnZAkiRJkiRJkiRJ6ro1MK5Lqk3osANwA/bRhURJQFGuC7ALrSZA4n0BBfAEzsAssKa/SuQXUK0HcARGVFtpDkx+xAvyntE2Xn6c3zZekdsAU767Aqc+N8HBSzR4An2WsAlm3+A2spgICbgz4EGo0SgsSZIkSZIkSZKkoXgBwgcillsM7JQAAAAASUVORK5CYII" class="arrow-img">
+            <div class="location-cities">
+              <img src= "https://img.freepik.com/free-vector/illustration-uk-flag_53876-18166.jpg?semt=ais_hybrid&w=740" class="flag-icon-1"  alt="">
+              <p class="tocity">UK</p>
+            </div>
+          </div>
+          </div>
+          <p class="testimonial-description">
+            workezy की वजह से मुझे UK में एक अच्छी सैलरी वाली ड्राइवर की नौकरी मिली। ट्रेनिंग से लेकर वीज़ा सपोर्ट तक का पूरा प्रोसेस बहुत ही आसान था। अब मैं अपने परिवार को बेहतर जीवन दे पा रहा हूं।
+          </p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="https://r2.erweima.ai/imgcompressed/img/compressed_bc3b9e2e7583717ff772a3ebc1faec48.webp" alt="">
+          </div>
+          <div class="testimonial-name">Rahul Garg</div>
+          <div class="testimonial-proffesion">Sales</div>
+          <div class="testimonial-location">
+            <div class="flex-location-cities">
+              <div class="location-cities">
+           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHqUFx4yBWukSFU98PfOvQaSbIoVjgSz6tA&s" class="flag-icon-4" alt="">
+              <p class="fromcity">India</p>
+            </div>
+            <img src= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAACdeAAAnXgHPwViOAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAALVJREFUeJzt1s0JwkAQQOGnHsU/ELxqI1ZgDbId2Ib9WIM3sQpr8BovCbKCJhBwSPI+2IWBgR0WdnZAkiRJkiRJkiRJ6ro1MK5Lqk3osANwA/bRhURJQFGuC7ALrSZA4n0BBfAEzsAssKa/SuQXUK0HcARGVFtpDkx+xAvyntE2Xn6c3zZekdsAU767Aqc+N8HBSzR4An2WsAlm3+A2spgICbgz4EGo0SgsSZIkSZIkSZKkoXgBwgcillsM7JQAAAAASUVORK5CYII" class="arrow-img">
+            <div class="location-cities">
+              <img src= "https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Flag_of_Australia.svg/1280px-Flag_of_Australia.svg.png" class="flag-icon-2"  alt="">
+              <p class="tocity">Aus</p>
+            </div>
+          </div>
+          </div>
+          <p class="testimonial-description">workezy ने मेरी ज़िंदगी बदल दी। उनकी ट्रेनिंग और सर्टिफिकेशन की मदद से मुझे ऑस्ट्रेलिया में एक स्थायी नौकरी मिली। वीज़ा प्रक्रिया में उनका पूरा सहयोग रहा, जिससे मेरा तनाव कम हो गया।</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="https://i.pinimg.com/originals/07/33/ba/0733ba760b29378474dea0fdbcb97107.png" alt="" class="img-3">
+          </div>
+          <div class="testimonial-name">Ronak Sharma</div>
+          <div class="testimonial-proffesion">Bank PO</div>
+          <div class="testimonial-location">
+            <div class="flex-location-cities">
+              <div class="location-cities">
+                <img src="https://encrypted-tbn0.gstatic.com/3images?q=tbn:ANd9GcRmHqUFx4yBWukSFU98PfOvQaSbIoVjgSz6tA&s" class="flag-icon-4" alt="">
+            <p class="fromcity">India</p>
+            </div>
+             <img src= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAACdeAAAnXgHPwViOAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAALVJREFUeJzt1s0JwkAQQOGnHsU/ELxqI1ZgDbId2Ib9WIM3sQpr8BovCbKCJhBwSPI+2IWBgR0WdnZAkiRJkiRJkiRJ6ro1MK5Lqk3osANwA/bRhURJQFGuC7ALrSZA4n0BBfAEzsAssKa/SuQXUK0HcARGVFtpDkx+xAvyntE2Xn6c3zZekdsAU767Aqc+N8HBSzR4An2WsAlm3+A2spgICbgz4EGo0SgsSZIkSZIkSZKkoXgBwgcillsM7JQAAAAASUVORK5CYII" class="arrow-img">
+            <div class="location-cities">
+              <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/1280px-Flag_of_Canada.svg.png" class="flag-icon-3"  alt="">
+              <p class="tocity">Canada</p>
+            </div>
+          </div>
+          </div>
+          <p class="testimonial-description">workezy ने मुझे एक अंतरराष्ट्रीय कंपनी में काम करने का मौका दिया। उनकी गाइडेंस और सपोर्ट ने मुझे बाजार में सफल होने का आत्मविश्वास दिया। इस शानदार अवसर के लिए मैं दिल से आभारी हूं।</p>
+        </div>
+      </div>
+      <div class="testimonial-cards" id="employer-cards">
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-55958-614810.jpg&fm=jpg" alt="">
+          </div>
+          <div class="testimonial-name">Mohammad Toufiq</div>
+          <div class="testimonial-proffesion">Backend Developer</div>
+          <div class="testimonial-location">
+            <div class="flex-location-cities">
+              <div class="location-cities">
+            <img src= "https://img.freepik.com/free-vector/illustration-uk-flag_53876-18166.jpg?semt=ais_hybrid&w=740" class="flag-icon-1"  alt="">
+          <p class="fromcity">UK</p>
+            </div>
+             <img src= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAACdeAAAnXgHPwViOAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAALVJREFUeJzt1s0JwkAQQOGnHsU/ELxqI1ZgDbId2Ib9WIM3sQpr8BovCbKCJhBwSPI+2IWBgR0WdnZAkiRJkiRJkiRJ6ro1MK5Lqk3osANwA/bRhURJQFGuC7ALrSZA4n0BBfAEzsAssKa/SuQXUK0HcARGVFtpDkx+xAvyntE2Xn6c3zZekdsAU767Aqc+N8HBSzR4An2WsAlm3+A2spgICbgz4EGo0SgsSZIkSZIkSZKkoXgBwgcillsM7JQAAAAASUVORK5CYII" class="arrow-img">
+            <div class="location-cities">
+             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHqUFx4yBWukSFU98PfOvQaSbIoVjgSz6tA&s" class="flag-icon-4" alt=""> 
+              <p class="tocity">India</p>
+            </div>
+          </div>
+          </div>
+          <p class="testimonial-description">
+            workezy की वजह से मुझे UK में एक अच्छी सैलरी वाली ड्राइवर की नौकरी मिली। ट्रेनिंग से लेकर वीज़ा सपोर्ट तक का पूरा प्रोसेस बहुत ही आसान था। अब मैं अपने परिवार को बेहतर जीवन दे पा रहा हूं।
+          </p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="https://www.shutterstock.com/image-photo/serious-handsome-young-indian-professional-260nw-2451794195.jpg" class="img-0" alt="">
+          </div>
+          <div class="testimonial-name">Mudit Gupta</div>
+          <div class="testimonial-proffesion">Marketing</div>
+          <div class="testimonial-location">
+            <div class="flex-location-cities">
+              <div class="location-cities">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Flag_of_Australia.svg/1280px-Flag_of_Australia.svg.png" class="flag-icon-2"  alt="">
+              <p class="fromcity">Aus</p>
+            </div>
+            <img src= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAACdeAAAnXgHPwViOAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAALVJREFUeJzt1s0JwkAQQOGnHsU/ELxqI1ZgDbId2Ib9WIM3sQpr8BovCbKCJhBwSPI+2IWBgR0WdnZAkiRJkiRJkiRJ6ro1MK5Lqk3osANwA/bRhURJQFGuC7ALrSZA4n0BBfAEzsAssKa/SuQXUK0HcARGVFtpDkx+xAvyntE2Xn6c3zZekdsAU767Aqc+N8HBSzR4An2WsAlm3+A2spgICbgz4EGo0SgsSZIkSZIkSZKkoXgBwgcillsM7JQAAAAASUVORK5CYII" class="arrow-img">
+            <div class="location-cities">
+           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHqUFx4yBWukSFU98PfOvQaSbIoVjgSz6tA&s" class="flag-icon-4" alt="">  
+              <p class="tocity">India</p>
+            </div>
+          </div>
+          </div>
+          <p class="testimonial-description">workezy ने मेरी ज़िंदगी बदल दी। उनकी ट्रेनिंग और सर्टिफिकेशन की मदद से मुझे ऑस्ट्रेलिया में एक स्थायी नौकरी मिली। वीज़ा प्रक्रिया में उनका पूरा सहयोग रहा, जिससे मेरा तनाव कम हो गया।</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-image">
+            <img src="https://www.shutterstock.com/image-photo/happy-young-man-sitting-home-260nw-2248472067.jpg" alt="" class="img-3">
+          </div>
+          <div class="testimonial-name">Mohit Joshi</div>
+          <div class="testimonial-proffesion">Management</div>
+          <div class="testimonial-location">
+            <div class="flex-location-cities">
+              <div class="location-cities">
+             <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/1280px-Flag_of_Canada.svg.png" class="flag-icon-3"  alt="">
+            <p class="fromcity">Canada</p>
+            </div>
+             <img src= "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAACdeAAAnXgHPwViOAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAALVJREFUeJzt1s0JwkAQQOGnHsU/ELxqI1ZgDbId2Ib9WIM3sQpr8BovCbKCJhBwSPI+2IWBgR0WdnZAkiRJkiRJkiRJ6ro1MK5Lqk3osANwA/bRhURJQFGuC7ALrSZA4n0BBfAEzsAssKa/SuQXUK0HcARGVFtpDkx+xAvyntE2Xn6c3zZekdsAU767Aqc+N8HBSzR4An2WsAlm3+A2spgICbgz4EGo0SgsSZIkSZIkSZKkoXgBwgcillsM7JQAAAAASUVORK5CYII" class="arrow-img">
+            <div class="location-cities">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHqUFx4yBWukSFU98PfOvQaSbIoVjgSz6tA&s" class="flag-icon-4" alt="">
+              <p class="tocity">India</p>
+            </div>
+          </div>
+          </div>
+          <p class="testimonial-description">workezy ने मुझे एक अंतरराष्ट्रीय कंपनी में काम करने का मौका दिया। उनकी गाइडेंस और सपोर्ट ने मुझे बाजार में सफल होने का आत्मविश्वास दिया। इस शानदार अवसर के लिए मैं दिल से आभारी हूं।</p>
+        </div>
+      </div>
+    </div>
+    <div class="apply-container">
+      <div class="apply-right">
+        <h2 class="apply-heading">Let Us Help You</h2>
+        <p class="apply-description">Whether you are an employer looking for skilled workers or a job seeker aiming to work overseas, Workezy  is your one-stop solution for all recruitment needs.</p>
+        <div class="button-container">
+        <button class="apply-button">Hire Now</button>
+        <button class="apply-button">Get a Job</button>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <img src="data:image/png;base64,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" alt="logo" class="img-4" >
+        </div>
+        
+        <div class="footer-section" >
+          <h3 class="footer-heading">About Us</h3>
+          <p class="footer-description">Workezy  bridges the gap between surplus blue-collar workforce in countries like India and labor shortages in regions such as the GCC and the West.</p>
+        </div>
+        <div class="footer-section">
+         <h3 class="footer-heading">Contact-Us</h3>
+         <div class="footer-contact-1">Phone +91 7850081562</div>
+         <div class="footer-contact-2">Email: info@workeazy.org</div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Workeazy | ALL Rights Reserved</p>
+      </div>
+    </footer>
+
+
+    <script>
+        function openModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Reset form and success message
+            document.getElementById('jobSeekerForm').reset();
+            document.getElementById('successMessage').classList.remove('show');
+        }
+
+        // function handleSubmit(event) {
+        //     event.preventDefault();
+            
+        //     // Get form data
+        //     const formData = new FormData(event.target);
+        //     const jobSeekerData = {};
+            
+        //     for (let [key, value] of formData.entries()) {
+        //         jobSeekerData[key] = value;
+        //     }
+            
+        //     // Simulate form submission
+        //     console.log('Job Seeker Data:', jobSeekerData);
+            
+        //     // Show success message
+        //     const successMessage = document.getElementById('successMessage');
+        //     successMessage.classList.add('show');
+            
+        //     // Auto close modal after 2 seconds
+        //     setTimeout(() => {
+        //         closeModal();
+        //     }, 2000);
+        // }
+
+        // // Close modal when clicking outside
+        // document.getElementById('modalOverlay').addEventListener('click', function(e) {
+        //     if (e.target === this) {
+        //         closeModal();
+        //     }
+        // });
+
+        // // Close modal with Escape key
+        // document.addEventListener('keydown', function(e) {
+        //     if (e.key === 'Escape') {
+        //         closeModal();
+        //     }
+        // });
+
+        // // Add floating animation to the main button
+        // setInterval(() => {
+        //     const button = document.querySelector('.main-button');
+        //     button.style.transform = 'translateY(-8px)';
+        //     setTimeout(() => {
+        //         button.style.transform = 'translateY(0)';
+        //     }, 1000);
+        // }, 3000);
+
+        // Testimonial switcher
+        document.addEventListener('DOMContentLoaded', function() {
+          const jobseekerBtn = document.getElementById('jobseeker-btn');
+          const employerBtn = document.getElementById('employer-btn');
+          const jobseekerCards = document.getElementById('jobseeker-cards');
+          const employerCards = document.getElementById('employer-cards');
+
+          // Initial state: show jobseeker, hide employer
+          jobseekerCards.style.display = 'flex';
+          employerCards.style.display = 'none';
+
+          jobseekerBtn.addEventListener('click', function() {
+            jobseekerBtn.classList.add('active');
+            employerBtn.classList.remove('active');
+            jobseekerCards.style.display = 'flex';
+            employerCards.style.display = 'none';
+          });
+
+          employerBtn.addEventListener('click', function() {
+            employerBtn.classList.add('active');
+            jobseekerBtn.classList.remove('active');
+            employerCards.style.display = 'flex';
+            jobseekerCards.style.display = 'none';
+          });
+        });
+    </script>
+  </body>
+
+  
+</html>
